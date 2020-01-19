@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ims/Admin/manageUser.dart';
+import 'package:ims/Admin/stats.dart';
 import 'package:ims/Screen/infoAd.dart';
 
 class Admin extends StatefulWidget {
@@ -18,7 +20,7 @@ class _AdminState extends State<Admin> {
           bottom: TabBar(
             tabs: <Widget>[
               Tab(text: 'Info'),
-              Tab(text: 'Add Product'),
+              Tab(text: 'Stats'),
               Tab(text: 'Manage User'),
             ],
           ),
@@ -26,8 +28,8 @@ class _AdminState extends State<Admin> {
         body: TabBarView(
           children: <Widget>[
             InfoAd(),
-            Center(child: Text('Add Product')),
-            Center(child: Text('Manage User')),
+            Stats(),
+            ManageUser(),
           ],
         ),
       ),
