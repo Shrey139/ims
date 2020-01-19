@@ -1,37 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:ims/Screen/bill.dart';
 import 'package:ims/Screen/infoAd.dart';
 
-class Staff extends StatefulWidget {
+class Admin extends StatefulWidget {
   @override
-  _StaffState createState() => _StaffState();
+  _AdminState createState() => _AdminState();
 }
 
-class _StaffState extends State<Staff> {
+class _AdminState extends State<Admin> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Staff'),
+          title: Text('Admin Panel'),
           centerTitle: true,
           bottom: TabBar(
             tabs: <Widget>[
               Tab(text: 'Info'),
-              Tab(text: 'Bill'),
-              Tab(text: 'Add'),
+              Tab(text: 'Add Product'),
+              Tab(text: 'Manage User'),
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
             InfoAd(),
-            Bill(),
-            Center(
-              child: Text('Add'),
-            ),
+            Center(child: Text('Add Product')),
+            Center(child: Text('Manage User')),
           ],
         ),
       ),
