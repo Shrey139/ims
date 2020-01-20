@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ims/Screen/addProduct.dart';
 import 'package:ims/Screen/bill.dart';
 import 'package:ims/Screen/infoAd.dart';
 
@@ -29,9 +30,7 @@ class _StaffState extends State<Staff> {
           children: <Widget>[
             InfoAd(),
             Bill(),
-            Center(
-              child: Text('Add'),
-            ),
+            AddProduct(),
           ],
         ),
       ),
