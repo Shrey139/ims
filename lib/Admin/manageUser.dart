@@ -17,7 +17,7 @@ class _ManageUserState extends State<ManageUser> {
   void initState() {
     super.initState();
     getData();
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
