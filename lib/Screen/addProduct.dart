@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:ims/Config.dart';
+import 'package:ims/Database/UserData.dart';
+import 'package:ims/Database/databaseDAO.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -14,8 +20,40 @@ class _AddProductState extends State<AddProduct> {
   TextEditingController _price = TextEditingController();
   TextEditingController _expireDate = TextEditingController();
   TextEditingController _quatity = TextEditingController();
-  // TextEditingController _type = TextEditingController();
+  List<UserData> userData;
+  DatabaseDAO databaseDAO = DatabaseDAO();
   String _type;
+  String pname, price, expireDate, quatity;
+  var res;
+  submit() async {
+    List _userData = await databaseDAO.getAllSortedByID();
+    setState(() {
+      userData = _userData;
+    });
+    String token = userData[0].token;
+    pname = _pname.text;
+    price = _price.text;
+    expireDate = _expireDate.text;
+    quatity = _quatity.text;
+    Map<String, String> header = {"Content-type": "application/json"};
+    String json = '{"productName": "' +
+        pname +
+        '", "price": "' +
+        price +
+        '", "quantity": "' +
+        quatity +
+        '", "type": "' +
+        _type +
+        '", "expiryDate": "' +
+        expireDate +
+        '", "token": "' +
+        token +
+        '"}';
+    Response response = await post(addProduct, headers: header, body: json);
+    print(response.body);
+    res = jsonDecode(response.body);
+    print(res['data']['id']);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +150,7 @@ class _AddProductState extends State<AddProduct> {
                       onPressed: () {
                         if (formKey.currentState.validate()) {
                           print('done');
+                          submit();
                         } else {
                           print('not done');
                         }

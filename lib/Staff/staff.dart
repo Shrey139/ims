@@ -9,6 +9,21 @@ class Staff extends StatefulWidget {
 }
 
 class _StaffState extends State<Staff> {
+  Column _bottomMenu() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          title: Text(
+            'Suraj Verma',
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -16,6 +31,25 @@ class _StaffState extends State<Staff> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.list),
+            onPressed: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  useRootNavigator: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  )),
+                  builder: (context) {
+                    return Container(
+                      child: _bottomMenu(),
+                    );
+                  });
+            },
+          ),
           title: Text('Staff'),
           centerTitle: true,
           bottom: TabBar(

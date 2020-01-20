@@ -7,18 +7,6 @@ class ManageUser extends StatefulWidget {
 }
 
 class _ManageUserState extends State<ManageUser> {
-  var url = 'https://randomuser.me/api/';
-  getData() async {
-    var response = await http.post(url, body: {'gender': 'female'});
-    print(response.body);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  } 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
