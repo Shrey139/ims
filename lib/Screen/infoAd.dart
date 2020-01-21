@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:ims/Database/UserData.dart';
@@ -35,9 +34,9 @@ class _InfoState extends State<InfoAd> {
     );
     setState(() {
       response = jsonDecode(res.body);
-      isLoading = false;
       price = _price.text;
       quatity = _quatity.text;
+      isLoading = false;
     });
   }
 
@@ -151,19 +150,22 @@ class _InfoState extends State<InfoAd> {
                                 TextFormField(
                                   decoration: InputDecoration(
                                       labelText: 'Product Name: '),
-                                  initialValue: response['data']['productName']
-                                      .toString(),
+                                  initialValue: response != null
+                                      ? response['data']['productName']
+                                          .toString()
+                                      : '',
                                   readOnly: true,
                                 ),
                                 TextFormField(
-                                  controller: _price,
+                                  //controller: _price,
                                   decoration:
                                       InputDecoration(labelText: 'Price: '),
-                                  initialValue:
-                                      response['data']['price'].toString(),
+                                  initialValue: response != null
+                                      ? response['data']['price'].toString()
+                                      : '',
                                 ),
                                 TextFormField(
-                                  controller: _quatity,
+                                  // controller: _quatity,
                                   decoration:
                                       InputDecoration(labelText: 'Quantity: '),
                                   initialValue:

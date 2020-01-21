@@ -30,6 +30,7 @@ dependencies:
   datetime_picker_formfield: ^1.0.0
   sembast: ^2.1.2+3
   path_provider: ^1.5.1
+  qr_flutter: ^3.2.0
   
 
 

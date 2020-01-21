@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ims/Admin/admin.dart';
 import 'package:ims/Database/UserData.dart';
 import 'package:ims/Login/login.dart';
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     checkLogin();
   }
 

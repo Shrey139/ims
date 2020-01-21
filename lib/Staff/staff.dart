@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ims/Database/UserData.dart';
 import 'package:ims/Database/databaseDAO.dart';
 import 'package:ims/Screen/addProduct.dart';
-import 'package:ims/Screen/bill.dart';
 import 'package:ims/Screen/infoAd.dart';
 import 'package:ims/main.dart';
 
@@ -51,7 +50,7 @@ class _StaffState extends State<Staff> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -92,7 +91,6 @@ class _StaffState extends State<Staff> {
           bottom: TabBar(
             tabs: <Widget>[
               Tab(text: 'Info'),
-              Tab(text: 'Bill'),
               Tab(text: 'Add'),
             ],
           ),
@@ -100,7 +98,6 @@ class _StaffState extends State<Staff> {
         body: TabBarView(
           children: <Widget>[
             InfoAd(),
-            Bill(),
             AddProduct(),
           ],
         ),
