@@ -24,11 +24,8 @@ class _InfoState extends State<Info> {
     var res = await http.get(
       Uri.encodeFull(productDetails + result),
     );
-    print(res.body);
     setState(() {
-      print('inside setSatet');
-      response = res.body;
-      name = response.data['productName'];
+      response = jsonDecode(res.body);
       isLoading = false;
     });
   }
@@ -63,44 +60,47 @@ class _InfoState extends State<Info> {
                                   TextFormField(
                                     decoration: InputDecoration(
                                         labelText: 'Product Name: '),
-                                    initialValue: response.data['productName'],
+                                    initialValue: response['data']
+                                            ['productName']
+                                        .toString(),
                                     readOnly: true,
                                   ),
-                                  // TextFormField(
-                                  //   decoration:
-                                  //       InputDecoration(labelText: 'Price: '),
-                                  //   initialValue: response['data']['product']
-                                  //       ['price'],
-                                  //   readOnly: true,
-                                  // ),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(
-                                  //       labelText: 'Quantity: '),
-                                  //   initialValue: response['data'][0]['product']
-                                  //       ['quantity'],
-                                  //   readOnly: true,
-                                  // ),
-                                  // TextFormField(
-                                  //   decoration:
-                                  //       InputDecoration(labelText: 'Type: '),
-                                  //   initialValue: response['data'][0]['product']
-                                  //       ['type'],
-                                  //   readOnly: true,
-                                  // ),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(
-                                  //       labelText: 'Purchase Date: '),
-                                  //   initialValue: response[0]['data']['product']
-                                  //       ['purchaseDate'],
-                                  //   readOnly: true,
-                                  // ),
-                                  // TextFormField(
-                                  //   decoration: InputDecoration(
-                                  //       labelText: 'Expiry Date: '),
-                                  //   initialValue: response[0]['data']['product']
-                                  //       ['expiryDate'],
-                                  //   readOnly: true,
-                                  // ),
+                                  TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: 'Price: '),
+                                    initialValue:
+                                        response['data']['price'].toString(),
+                                    readOnly: true,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: 'Quantity: '),
+                                    initialValue:
+                                        response['data']['quantity'].toString(),
+                                    readOnly: true,
+                                  ),
+                                  TextFormField(
+                                    decoration:
+                                        InputDecoration(labelText: 'Type: '),
+                                    initialValue:
+                                        response['data']['type'].toString(),
+                                    readOnly: true,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: 'Purchase Date: '),
+                                    initialValue: response['data']
+                                            ['purchaseDate']
+                                        .toString(),
+                                    readOnly: true,
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: 'Expiry Date: '),
+                                    initialValue: response['data']['expiryDate']
+                                        .toString(),
+                                    readOnly: true,
+                                  ),
                                 ],
                               ),
                             ),

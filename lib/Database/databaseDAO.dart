@@ -13,9 +13,8 @@ class DatabaseDAO {
     print(result);
   }
 
-  Future delete(UserData userData) async {
-    final finder = Finder(filter: Filter.byKey(userData.id));
-    await _userData.delete(await _db, finder: finder);
+  Future deleteAll() async {
+    await _userData.delete(await _db);
   }
 
   Future<List<UserData>> getAllSortedByID() async {

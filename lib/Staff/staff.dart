@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:ims/Database/UserData.dart';
+import 'package:ims/Database/databaseDAO.dart';
 import 'package:ims/Screen/addProduct.dart';
 import 'package:ims/Screen/bill.dart';
 import 'package:ims/Screen/infoAd.dart';
+import 'package:ims/main.dart';
 
 class Staff extends StatefulWidget {
   @override
@@ -9,13 +12,34 @@ class Staff extends StatefulWidget {
 }
 
 class _StaffState extends State<Staff> {
+  DatabaseDAO databaseDAO = DatabaseDAO();
+  List<UserData> userData;
+  getUserData() async {
+    List _userData = await databaseDAO.getAllSortedByID();
+    setState(() {
+      userData = _userData;
+    });
+  }
+
+  initState() {
+    super.initState();
+    getUserData();
+  }
+
   Column _bottomMenu() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         ListTile(
           title: Text(
-            'Suraj Verma',
+            userData[0].name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        ListTile(
+          title: Text(
+            userData[0].mobile,
             style: TextStyle(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
@@ -31,6 +55,19 @@ class _StaffState extends State<Staff> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.highlight_off),
+              onPressed: () {
+                databaseDAO.deleteAll();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyHomePage(),
+                    ));
+              },
+            )
+          ],
           leading: IconButton(
             icon: Icon(Icons.list),
             onPressed: () {

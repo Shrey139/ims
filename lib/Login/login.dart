@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController _userController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   DatabaseDAO databaseDAO = DatabaseDAO();
@@ -33,122 +34,133 @@ class _LoginState extends State<Login> {
     Response response = await post(loginUrl, headers: header, body: json);
     print(response.body);
     var data = jsonDecode(response.body);
-    databaseDAO.insert(UserData(
-      name: data['data']['name'],
-      mobile: data['data']['mobileNumber'],
-      role: data['data']['role'],
-      token: data['data']['token'],
-    ));
-    if (data['data']['role'] == 'staff') {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Staff(),
-          ));
-    } else if (data['data']['role'] == 'admin') {
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Admin(),
-          ));
+    if (data['status'] == 'success') {
+      databaseDAO.insert(UserData(
+        idid: data['data']['_id'],
+        name: data['data']['name'],
+        mobile: data['data']['mobileNumber'],
+        role: data['data']['role'],
+        token: data['data']['token'],
+      ));
+      if (data['data']['role'] == 'staff') {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Staff(),
+            ));
+      } else if (data['data']['role'] == 'admin') {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Admin(),
+            ));
+      }
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Wrong username or password'),
+        duration: Duration(seconds: 2),
+      ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('asset/image/background.jpg'),
-            fit: BoxFit.fitHeight),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-        child: Center(
-          child: Card(
-            margin: EdgeInsets.all(20.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            clipBehavior: Clip.antiAlias,
-            elevation: 2.0,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    TextFormField(
-                      validator: (_userController) {
-                        if (_userController.isEmpty) {
-                          return 'Enter Username';
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: _userController,
-                      decoration: InputDecoration(
+    return Scaffold(
+      key: _scaffoldKey,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('asset/image/background.jpg'),
+              fit: BoxFit.fitHeight),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+          child: Center(
+            child: Card(
+              margin: EdgeInsets.all(20.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              clipBehavior: Clip.antiAlias,
+              elevation: 2.0,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      TextFormField(
+                        validator: (_userController) {
+                          if (_userController.isEmpty) {
+                            return 'Enter Username';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: _userController,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50)),
+                            labelText: 'Username',
+                            alignLabelWithHint: true,
+                            contentPadding: EdgeInsets.all(20),
+                            prefixIcon: Icon(Icons.person_outline)),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      TextFormField(
+                        validator: (_passController) {
+                          if (_passController.isEmpty) {
+                            return 'Enter Password';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: _passController,
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50)),
-                          labelText: 'Username',
+                          labelText: 'Password',
                           alignLabelWithHint: true,
                           contentPadding: EdgeInsets.all(20),
-                          prefixIcon: Icon(Icons.person_outline)),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      validator: (_passController) {
-                        if (_passController.isEmpty) {
-                          return 'Enter Password';
-                        } else {
-                          return null;
-                        }
-                      },
-                      controller: _passController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50)),
-                        labelText: 'Password',
-                        alignLabelWithHint: true,
-                        contentPadding: EdgeInsets.all(20),
-                        prefixIcon: Icon(Icons.vpn_key),
+                          prefixIcon: Icon(Icons.vpn_key),
+                        ),
+                        obscureText: true,
                       ),
-                      obscureText: true,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    RaisedButton(
-                      padding: EdgeInsets.all(10),
-                      color: Theme.of(context).accentColor,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
+                      SizedBox(
+                        height: 20,
                       ),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(fontSize: 18.0),
+                      RaisedButton(
+                        padding: EdgeInsets.all(10),
+                        color: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        onPressed: () {
+                          if (formKey.currentState.validate()) {
+                            print('done');
+                          } else {
+                            print('not done');
+                          }
+                          _login();
+                        },
                       ),
-                      onPressed: () {
-                        if (formKey.currentState.validate()) {
-                          print('done');
-                        } else {
-                          print('not done');
-                        }
-                        _login();
-                      },
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    FlatButton(
-                      onPressed: () {},
-                      child: Text('Forget Password'),
-                    )
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      FlatButton(
+                        onPressed: () {},
+                        child: Text('Forget Password'),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
