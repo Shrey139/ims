@@ -102,6 +102,7 @@ class _InfoState extends State<InfoAd> {
 
   dispactProduct() async {
     int id = userData[0].id;
+    print(id);
     Map<String, String> header = {"Content-type": "application/json"};
     String json = '{"id": "' + id.toString() + '", "token": "' + token + '"}';
     Response response = await put(dispactProd, headers: header, body: json);

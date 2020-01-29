@@ -52,6 +52,12 @@ class _AddProductState extends State<AddProduct> {
         '", "token": "' +
         token +
         '"}';
+    setState(() {
+      _pname.clear();
+      _price.clear();
+      _expireDate.clear();
+      _quatity.clear();
+    });
     Response response = await post(addProduct, headers: header, body: json);
     print(response.body);
     res = jsonDecode(response.body);

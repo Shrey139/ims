@@ -6,3 +6,4 @@ final String addProduct = url + 'api/v1/products/';
 final String updateProd = url + 'api/v1/products/';
 final String removeProd = url + 'api/v1/products/';
 final String dispactProd = url + 'api/v1/products/dispatch/';
+final String statsurl = url + 'api/v1/stats/';

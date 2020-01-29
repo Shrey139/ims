@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ims/Admin/AddUser.dart';
 import 'package:ims/Admin/manageUser.dart';
 import 'package:ims/Admin/stats.dart';
 import 'package:ims/Database/databaseDAO.dart';
@@ -39,7 +40,7 @@ class _AdminState extends State<Admin> {
               Tab(text: 'Info'),
               Tab(text: 'Add'),
               Tab(text: 'Stats'),
-              Tab(text: 'Manage User'),
+              Tab(text: 'Adding User'),
             ],
           ),
         ),
@@ -48,7 +49,7 @@ class _AdminState extends State<Admin> {
             InfoAd(),
             AddProduct(),
             Stats(),
-            ManageUser(),
+            AddUser(),
           ],
         ),
       ),
