@@ -72,7 +72,7 @@ class _StatsState extends State<Stats> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height / 3;
+    var height = MediaQuery.of(context).size.height / 4;
     var width = MediaQuery.of(context).size.width / 2.2;
     return Container(
       child: Column(
@@ -180,7 +180,7 @@ class _StatsState extends State<Stats> {
                 )
               ],
               defaultRenderer: chart.ArcRendererConfig(
-                  arcWidth: 100,
+                  arcWidth: 80,
                   arcRendererDecorators: [
                     chart.ArcLabelDecorator(
                         labelPosition: chart.ArcLabelPosition.inside)
